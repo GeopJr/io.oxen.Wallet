@@ -1,0 +1,46 @@
+app-id: io.oxen.Wallet
+base: org.electronjs.Electron2.BaseApp
+base-version: "20.08"
+runtime: org.freedesktop.Platform
+runtime-version: "20.08"
+sdk: org.freedesktop.Sdk
+command: oxen-electron-wallet
+separate-locales: false
+rename-desktop-file: oxen-electron-wallet.desktop
+rename-icon: oxen-electron-wallet
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --share=network
+  - --device=dri
+  - --filesystem=home
+
+modules:
+  - name: oxen-electron-wallet
+    buildsystem: simple
+    build-commands:
+      - ar x oxen-electron-wallet-*-linux.deb
+      - rm -f oxen-electron-wallet-*-linux.deb
+      - tar xf data.tar.xz
+      - rm -f control.tar.gz data.tar.xz debian-binary
+      - cp -r usr/* opt/* /app
+      - chmod -R a-s,go+rX,go-w /app/Oxen\ Electron\ Wallet
+      - sed -i 's|Exec=.*|Exec=oxen-electron-wallet %U|' /app/share/applications/oxen-electron-wallet.desktop
+      - install oxen-electron-wallet.sh /app/bin/oxen-electron-wallet
+      - install -Dm644 io.oxen.Wallet.metainfo.xml /app/share/metainfo/io.oxen.Wallet.metainfo.xml
+    sources:
+      - type: file
+        url: https://github.com/oxen-io/oxen-electron-gui-wallet/releases/download/v1.6.0/oxen-electron-wallet-1.6.0-linux.deb
+        sha256: 9f4516d7946c813f3b49961fcb2aa4f1965cc1c9c903df576d932fc54194896e
+        x-checker-data:
+          type: json
+          url: https://api.github.com/repos/oxen-io/oxen-electron-gui-wallet/releases/latest
+          version-query: '.tag_name | sub("^v"; "")'
+          url-query: '.assets[] | select(.name=="oxen-electron-wallet-" + $version + "-linux.deb") | .browser_download_url'
+      - type: script
+        dest-filename: oxen-electron-wallet.sh
+        commands:
+          - 'export TMPDIR="$XDG_RUNTIME_DIR/app/$FLATPAK_ID"'
+          - "exec zypak-wrapper /app/Oxen\\ Electron\\ Wallet/oxen-electron-wallet \"$@\""
+      - type: file
+        path: io.oxen.Wallet.metainfo.xml

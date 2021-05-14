@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+  <id>io.oxen.Wallet</id>
+  <launchable type="desktop-id">io.oxen.Wallet.desktop</launchable>
+  <name>Oxen Electron Wallet</name>
+  <project_license>BSD-3-Clause</project_license>
+  <developer_name>Oxen Project</developer_name>
+  <summary>Oxen Electron GUI Wallet</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <url type="homepage">https://oxen.io/</url>
+  <url type="bugtracker">https://github.com/oxen-io/oxen-electron-gui-wallet/issues</url>
+  <description>
+    <p>
+      The Oxen Wallet allows you to safely store and spend your Oxen how you
+      wish. The Oxen Wallet is powered by remote nodes provided by the Oxen
+      community and the Oxen team. Remote nodes allow you to synchronize with
+      the blockchain without having to store all of the downloaded blocks on
+      your device.
+    </p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <image type="source">https://github.com/oxen-io/oxen-electron-gui-wallet/blob/development/src-electron/icons/mrcuug.PNG</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="1.6.0" date="2021-04-27"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>
